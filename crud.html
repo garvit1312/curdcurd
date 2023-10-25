@@ -85,7 +85,7 @@
                 phone
             };
 
-            const data = axios.post("https://crudcrud.com/api/eefb012afb1246a398cd190159c2da58/addUser", obj)
+            const data = axios.post("https://crudcrud.com/api/2615d1a45350401d9871780abf543b3f/addUser", obj)
                 .then((response) => {
                     showOnDisplay(response.data)
                     console.log(response);
@@ -95,7 +95,7 @@
 
         }
         window.addEventListener("DOMContentLoaded", () => {
-            const data = axios.get("https://crudcrud.com/api/eefb012afb1246a398cd190159c2da58/addUser")
+            const data = axios.get("https://crudcrud.com/api/2615d1a45350401d9871780abf543b3f/addUser")
                 .then((response) => {
                     for (var i = 0; i < response.data.length; i++) {
                         showOnDisplay(response.data[i]);
@@ -124,7 +124,7 @@
             button.onclick = () => {
                 const id = obj._id;
                 console.log(id);
-                axios.delete(`https://crudcrud.com/api/eefb012afb1246a398cd190159c2da58/addUser/${id}`)
+                axios.delete(`https://crudcrud.com/api/2615d1a45350401d9871780abf543b3f/addUser/${id}`)
                     .then((response) => {
                         // showOnDisplay(response.data)
                         console.log(response);
@@ -141,7 +141,7 @@
                 document.getElementById('name').value = obj.name;
                 document.getElementById('email').value = obj.email;
                 document.getElementById('phone').value = obj.phone;
-                axios.delete(`https://crudcrud.com/api/eefb012afb1246a398cd190159c2da58 /addUser/${id}`)
+                axios.delete(`https://crudcrud.com/api/2615d1a45350401d9871780abf543b3f/addUser/${id}`)
                     .then((response) => {
                         // showOnDisplay(response.data)
                         console.log(response);
