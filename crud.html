@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: azure;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        #form-section {
+            width: 200px;
+            height: 200px;
+            background-color: aqua;
+            margin: 3rem;
+            padding: 3rem;
+
+
+        }
+
+        #inner-form {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+
+
+        }
+
+        input {
+            margin: 0.5rem;
+        }
+
+        label {
+            margin: 0.5rem;
+        }
+
+        #btn {
+            height: 21px;
+            width: 100px;
+            text-align: center;
+            margin-left: 50px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+
+    <section id="form-section">
+        <form id="inner-form" onsubmit="saveOnLocal(event)">
+            <div id="msg"></div>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email">
+            <label for="phone">Phone</label>
+            <input type="text" name="phone" id="phone">
+            <input type="submit" id="btn" value="submit">
+
+        </form>
+        <ul id="users">
+            <li>Garvit</li>
+        </ul>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+        
+
+    <script>
+        function saveOnLocal(event) {
+            event.preventDefault();
+            const name = event.target.name.value;
+            const email = event.target.email.value;
+            const phone = event.target.phone.value;
+
+            const obj = {
+                name,
+                email,
+                phone
+            };
+
+            const data = axios.post("https://crudcrud.com/api/eefb012afb1246a398cd190159c2da58/addUser", obj)
+                .then((response) => {
+                    showOnDisplay(response.data)
+                    console.log(response);
+
+                })
+                .catch((err) => console.log(err))
+
+        }
+        window.addEventListener("DOMContentLoaded", () => {
+            const data = axios.get("https://crudcrud.com/api/eefb012afb1246a398cd190159c2da58/addUser")
+                .then((response) => {
+                    for (var i = 0; i < response.data.length; i++) {
+                        showOnDisplay(response.data[i]);
+
+                    }
+                })
+        })
+        function showOnDisplay(obj) {
+            const users = document.getElementById('users');
+            const li = document.createElement('li');
+
+            li.textContent = `${obj.name} ${obj.email} ${obj.phone}`;
+
+            const button = document.createElement('button');
+            // button.appendChild(document.createTextNode('delete'));
+            button.textContent = "Delete";
+            li.appendChild(button);
+            users.appendChild(li);
+
+            const editBtn = document.createElement('button');
+            // button.appendChild(document.createTextNode('delete'));
+            editBtn.textContent = "Edit";
+            li.appendChild(editBtn);
+            users.appendChild(li);
+
+            button.onclick = () => {
+                const id = obj._id;
+                console.log(id);
+                axios.delete(`https://crudcrud.com/api/eefb012afb1246a398cd190159c2da58/addUser/${id}`)
+                    .then((response) => {
+                        // showOnDisplay(response.data)
+                        console.log(response);
+
+                    })
+                    .catch((err) => console.log(err))
+
+                users.removeChild(li);
+            }
+
+            editBtn.onclick = () => {
+                const id = obj._id;
+                console.log(id);
+                document.getElementById('name').value = obj.name;
+                document.getElementById('email').value = obj.email;
+                document.getElementById('phone').value = obj.phone;
+                axios.delete(`https://crudcrud.com/api/eefb012afb1246a398cd190159c2da58 /addUser/${id}`)
+                    .then((response) => {
+                        // showOnDisplay(response.data)
+                        console.log(response);
+
+                    })
+                    .catch((err) => console.log(err))
+
+
+
+                // axios.put(`https://crudcrud.com/api/a34886a68b14441ebef9794532017bb7/addUser/${id}`)
+                // .then((response) => {
+                //     // showOnDisplay(response.data)
+                //     console.log(response);
+
+                // })
+                // .catch((err) => console.log(err))
+
+                users.removeChild(li);
+
+            }
+
+
+        }
+    </script>
+</body>
+
+</html>
